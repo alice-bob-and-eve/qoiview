@@ -29,8 +29,8 @@
 #include <stdlib.h>
 
 #define MAX_FILE_SIZE (300 * 1024 * 1024)
-#define MAX_SCALE (2.0f)
-#define MIN_SCALE (0.125f)
+#define MAX_SCALE (8.0f)
+#define MIN_SCALE (0.25f)
 
 static struct {
     struct {
@@ -71,8 +71,8 @@ static void scale(float d) {
 }
 
 static void move(float dx, float dy) {
-    state.image.offset.x += dx / state.image.scale;
-    state.image.offset.y += dy / state.image.scale;
+    state.image.offset.x += (dx / state.image.scale);
+    state.image.offset.y += (dy / state.image.scale);
 }
 
 static void create_image(void* ptr, size_t size) {
@@ -300,7 +300,6 @@ static void event(const sapp_event* ev) {
                 case SAPP_KEYCODE_1: state.image.color.r = (state.image.color.r == 0.0f) ? 1.0f : 0.0f; break;
                 case SAPP_KEYCODE_2: state.image.color.g = (state.image.color.g == 0.0f) ? 1.0f : 0.0f; break;
                 case SAPP_KEYCODE_3: state.image.color.b = (state.image.color.b == 0.0f) ? 1.0f : 0.0f; break;
-                case SAPP_KEYCODE_0: state.image.scale = 1.0f; break;
                 default: break;
             }
             break;
@@ -310,7 +309,7 @@ static void event(const sapp_event* ev) {
             }
             break;
         case SAPP_EVENTTYPE_MOUSE_SCROLL:
-            scale(ev->scroll_y * 0.125f);
+            scale(ev->scroll_y * 0.25f);
             break;
         default:
             break;
